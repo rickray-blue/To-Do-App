@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import "./App.css";
+import Header from './components/Header';
+import AddToDo from './components/AddToDo';
 
-function App() {
+
+const App = () => {
+
+  const [task, setTask] = useState("");
+  const [todos, setTodos] = useState([]);
+
+
+  const handleChange = (e) => {
+    setTask(e.target.value);
+  };
+
+  const addNewToDo = (e) => {
+    e.preventDefault();
+    setTodos([...todos, { id: Math.random(), task: task }]);
+    setTask("");
+  };
+
+  const removeToDo = (id) => {
+    setTodos(todos.filter((todo) => todo.id != id));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+
+      <div className="ToDoContainer">
+        <Header />
+        <form onSubmit={addNewToDo}>
+
+          <AddToDo task={task} handleChange={handleChange} addNewToDo={addNewToDo} />
+          <ul className="newToDo">
+            {todos.map((todo) =>
+              <li className="newList" key={todo.id}>
+                {todo.task}
+                <a href="#" onClick={() => removeToDo(todo.id)}>X</a>
+              </li>
+            )}
+          </ul>
+
+        </form>
+      </div>
     </div>
   );
-}
+};
 
 export default App;

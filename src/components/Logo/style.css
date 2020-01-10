@@ -1,0 +1,9 @@
+.Logo a{
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin: 20px 0;
+    font-weight: bold;
+}
